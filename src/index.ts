@@ -3,7 +3,6 @@ import type { Request, Response } from "express";
 import { userRouter } from "./user/user.router.js";
 import { PrismaSessionStore } from "@quixo3/prisma-session-store";
 import prisma from "./db.js";
-import "../custom.d.js";
 import session from "express-session";
 
 const app = express();
