@@ -5,7 +5,7 @@
     "target": "ES2020",
     "sourceMap": true,
     "outDir": "dist",
-    "typeRoots": ["./node_modules/@types", "./user/custom.d.ts"]
+    "typeRoots": ["./node_modules/@types", "./src/custom.d.ts"]
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"]
