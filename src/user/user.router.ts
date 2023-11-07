@@ -2,6 +2,7 @@ import express from "express";
 import type { Request, Response } from "express";
 import { createUser, checkUser } from "./user.model.js";
 import { hashPassword, checkPassword } from "../authentication.js";
+import { isAuthenticated } from "../authentication.js";
 
 export const userRouter = express.Router();
 
@@ -21,20 +22,31 @@ userRouter.post("/", async (req: Request, res: Response) => {
   }
 });
 
-userRouter.post("/login", async (req: Request, res: Response) => {
-  const user = await checkUser(req.body.username);
-  if (
-    !user ||
-    !(await checkPassword(req.body.password, user.hashed_password))
-  ) {
-    return res.status(401).send("Invalid username/password combination");
-  } else {
-    console.log(req.session);
-    return res.status(200).send("success");
+userRouter.post(
+  "/login",
+  isAuthenticated,
+  async (req: Request, res: Response) => {
+    const user = await checkUser(req.body.username);
+    if (
+      !user ||
+      !(await checkPassword(req.body.password, user.hashed_password))
+    ) {
+      return res.status(401).send("Invalid username/password combination");
+    } else {
+      req.session.authorized = true;
+      req.session.user = user.username;
+      return res.status(200).send("success");
+    }
   }
-});
+);
 
-userRouter.get("/logout", async (req: Request, res: Response) => {
-  req.session.destroy(() => {});
-  res.redirect("/");
-});
+userRouter.get(
+  "/logout",
+  isAuthenticated,
+  async (req: Request, res: Response) => {
+    req.session.destroy((error) => {
+      return res.status(500).send(error);
+    });
+    res.redirect("/");
+  }
+);

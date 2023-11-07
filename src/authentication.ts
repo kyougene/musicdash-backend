@@ -1,4 +1,6 @@
 import bcrypt from "bcrypt";
+import type { NextFunction, Request, Response } from "express";
+
 const saltRounds = 10;
 
 type Password = {
@@ -22,4 +24,16 @@ export const checkPassword = async (
 ): Promise<Boolean> => {
   const result = await bcrypt.compare(password, hash);
   return result;
+};
+
+export const isAuthenticated = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  if (req.session && req.session.authorized) {
+    next();
+  } else {
+    res.status(401).send("Unauthorized");
+  }
 };

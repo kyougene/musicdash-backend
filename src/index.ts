@@ -24,7 +24,11 @@ app.use(
 );
 
 app.get("/", (req: Request, res: Response) => {
-  res.send("hello");
+  if (req.session.authorized) {
+    return res.redirect("/home");
+  } else {
+    return res.send("Welcome to the main homepage");
+  }
 });
 
 app.use("/users", userRouter);
