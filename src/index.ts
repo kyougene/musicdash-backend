@@ -1,16 +1,10 @@
 import express from "express";
 import type { Request, Response } from "express";
 import { userRouter } from "./user/user.router.js";
-import session from "express-session";
 import { PrismaSessionStore } from "@quixo3/prisma-session-store";
 import prisma from "./db.js";
-
-declare module "express-session" {
-  export interface SessionData {
-    user: string;
-    authorized: boolean;
-  }
-}
+import "../custom.d.js";
+import session from "express-session";
 
 const app = express();
 const PORT = process.env.PORT || 8080;

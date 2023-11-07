@@ -20,7 +20,7 @@ export const createUser = async (user: Omit<User, "id">): Promise<User> => {
   });
 };
 
-export const checkUser = async (user: string): Promise<User> => {
+export const checkUser = async (user: string): Promise<User | null> => {
   return await prisma.user.findUnique({
     where: {
       username: user,

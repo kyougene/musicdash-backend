@@ -29,13 +29,12 @@ userRouter.post("/login", async (req: Request, res: Response) => {
   ) {
     return res.status(401).send("Invalid username/password combination");
   } else {
-    req.session.user = user.username;
-    req.session.authorized = true;
+    console.log(req.session);
     return res.status(200).send("success");
   }
 });
 
 userRouter.get("/logout", async (req: Request, res: Response) => {
-  //   req.session.destroy;
+  req.session.destroy(() => {});
   res.redirect("/");
 });
