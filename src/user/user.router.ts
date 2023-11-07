@@ -29,8 +29,8 @@ userRouter.post("/login", async (req: Request, res: Response) => {
   ) {
     return res.status(401).send("Invalid username/password combination");
   } else {
-    // req.session.user = user.username;
-    // req.session.authorized = true;
+    req.session.user = user.username;
+    req.session.authorized = true;
     return res.status(200).send("success");
   }
 });
