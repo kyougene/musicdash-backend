@@ -1,10 +1,13 @@
 import express from "express";
 import type { Request, Response } from "express";
 import { userRouter } from "./user/user.router.js";
+import { spotifyRouter } from "./spotify/spotify.router.js";
 import { PrismaSessionStore } from "@quixo3/prisma-session-store";
 import prisma from "./db.js";
 import session from "express-session";
 import cors from "cors";
+import "./config/passport-setup.js";
+import passport from "passport";
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -24,6 +27,9 @@ app.use(
   })
 );
 
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.get("/", (req: Request, res: Response) => {
   if (req.session.authorized) {
     return res.redirect("/home");
@@ -31,6 +37,8 @@ app.get("/", (req: Request, res: Response) => {
     return res.send("welcome to the page");
   }
 });
+
+app.use("/auth", spotifyRouter);
 
 app.use("/users", userRouter);
 

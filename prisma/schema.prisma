@@ -22,3 +22,10 @@ model Session {
   data      String
   expiresAt DateTime
 }
+
+model SpotifyProfile {
+  id           Int    @id @default(autoincrement())
+  spotifyId    String @unique
+  accessToken  String
+  refreshToken String
+}
