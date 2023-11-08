@@ -14,6 +14,6 @@ spotifyRouter.get(
   "/spotify/redirect",
   passport.authenticate("spotify"),
   (req, res) => {
-    res.redirect("/home");
+    res.redirect(`${process.env.URL}home`);
   }
 );
