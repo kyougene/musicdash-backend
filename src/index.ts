@@ -4,11 +4,17 @@ import { userRouter } from "./user/user.router.js";
 import { PrismaSessionStore } from "@quixo3/prisma-session-store";
 import prisma from "./db.js";
 import session from "express-session";
+import cors from "cors";
 
 const app = express();
 const PORT = process.env.PORT || 8080;
 
 app.use(express.json());
+app.use(
+  cors({
+    origin: ["http://localhost:5173"],
+  })
+);
 app.use(
   session({
     store: new PrismaSessionStore(prisma, {

@@ -22,23 +22,19 @@ userRouter.post("/", async (req: Request, res: Response) => {
   }
 });
 
-userRouter.post(
-  "/login",
-  isAuthenticated,
-  async (req: Request, res: Response) => {
-    const user = await checkUser(req.body.username);
-    if (
-      !user ||
-      !(await checkPassword(req.body.password, user.hashed_password))
-    ) {
-      return res.status(401).send("Invalid username/password combination");
-    } else {
-      req.session.authorized = true;
-      req.session.user = user.username;
-      return res.status(200).send("success");
-    }
+userRouter.post("/login", async (req: Request, res: Response) => {
+  const user = await checkUser(req.body.username);
+  if (
+    !user ||
+    !(await checkPassword(req.body.password, user.hashed_password))
+  ) {
+    return res.status(401).send("Invalid username/password combination");
+  } else {
+    req.session.authorized = true;
+    req.session.user = user.username;
+    return res.status(200).send("success");
   }
-);
+});
 
 userRouter.get(
   "/logout",
