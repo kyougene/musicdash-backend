@@ -5,8 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "build": "npm install && npx prisma migrate deploy",
-    "postbuild": "npx --package=typescript -- tsc",
+    "build": "npm install && npx prisma migrate deploy && npx --package=typescript -- tsc",
     "start": "node dist/index.js",
     "dev": "tsc -w & nodemon dist/index.js"
   },
