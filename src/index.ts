@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 8080;
 app.use(express.json());
 app.use(
   cors({
-    origin: ["http://localhost:5173"],
+    origin: ["*"],
   })
 );
 app.use(
@@ -29,7 +29,9 @@ app.use(
 );
 
 app.get("/", (req: Request, res: Response) => {
-  return res.send("Welcome to the main homepage");
+  if (req.session.authorized) {
+    return res.redirect("/home");
+  }
 });
 
 app.use("/users", userRouter);
