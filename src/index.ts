@@ -1,7 +1,7 @@
 import express from "express";
 import type { Request, Response } from "express";
 import { userRouter } from "./user/user.router.js";
-import { spotifyRouter } from "./spotify/spotify.router.js";
+import { authRouter } from "./oauth/auth.router.js";
 import { PrismaSessionStore } from "@quixo3/prisma-session-store";
 import prisma from "./db.js";
 import session from "express-session";
@@ -38,7 +38,7 @@ app.get("/", (req: Request, res: Response) => {
   }
 });
 
-app.use("/auth", spotifyRouter);
+app.use("/auth", authRouter);
 
 app.use("/users", userRouter);
 

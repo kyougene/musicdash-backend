@@ -1,19 +1,7 @@
-import express from "express";
-import passport from "passport";
+// import express from "express"
 
-export const spotifyRouter = express.Router();
+// export const spotifyRouter = express.Router();
 
-spotifyRouter.get(
-  "/spotify",
-  passport.authenticate("spotify", {
-    scope: ["user-library-read", "user-top-read", "user-read-recently-played"],
-  })
-);
+// spotifyRouter.get("/recents", (req, res) => {
 
-spotifyRouter.get(
-  "/spotify/redirect",
-  passport.authenticate("spotify"),
-  (req, res) => {
-    res.status(200).redirect(`${process.env.URL}home`);
-  }
-);
+// })
