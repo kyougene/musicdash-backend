@@ -31,11 +31,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get("/", (req: Request, res: Response) => {
-  if (req.session.authorized) {
-    return res.redirect("/home");
-  } else {
-    return res.send("welcome to the page");
-  }
+  res.send("hello");
 });
 
 app.use("/auth", authRouter);
