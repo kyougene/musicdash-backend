@@ -32,7 +32,7 @@ Follow these steps to get the Music Dashboard backend up and running locally
    npm install
    ```
 
-4. To interact with the backend and Spotify API, you'll need to set up your environment variables. Create a .env file in the root of the project and provide the necessary configuration. An example .env file might look like this:
+4. To interact with the your database and Spotify API, you'll need to set up your environment variables. Create a .env file in the root of the project and provide the necessary configuration. An example .env file might look like this:
 
    ```
    URL="your/frontend/url"
@@ -63,4 +63,5 @@ Follow these steps to get the Music Dashboard backend up and running locally
 </div>
 
 ## ISSUES AND NOTES
+* Directly accessing the backend endpoints successfully retrieves data from spotify's API
 * Currently there are placeholders values being used in the frontend to display data instead of data retrieved from api requests to these endpoints, this is due to CORS issues blocking these requests 
