@@ -13,7 +13,11 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: ["https://solo-project-six.vercel.app"],
+  })
+);
 app.use(
   session({
     store: new PrismaSessionStore(prisma, {
@@ -35,6 +39,8 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.use("/auth", authRouter);
+
+app.options("/spotify/top", cors());
 
 app.use("/spotify", spotifyRouter);
 
