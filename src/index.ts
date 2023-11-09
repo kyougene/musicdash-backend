@@ -7,6 +7,7 @@ import session from "express-session";
 import cors from "cors";
 import "./config/passport-setup.js";
 import passport from "passport";
+import { spotifyRouter } from "./spotify/spotify.router.js";
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -39,7 +40,7 @@ app.get("/", (req: Request, res: Response) => {
 
 app.use("/auth", authRouter);
 
-app.get("/dashboard");
+app.use("/spotify", spotifyRouter);
 
 app.listen(PORT, () => {
   console.log(`now listening on ${PORT}`);
