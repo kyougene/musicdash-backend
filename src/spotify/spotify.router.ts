@@ -30,7 +30,7 @@ spotifyRouter.get("/top", async (req: UserInfo, res) => {
 
   try {
     const response = await axios(options);
-    const topTracks = response.data.items.name;
+    const topTracks = response.data.items;
     console.log(topTracks);
     res.json(topTracks);
   } catch (error) {
