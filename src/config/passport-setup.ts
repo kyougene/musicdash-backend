@@ -42,6 +42,7 @@ passport.use(
               refreshToken,
             },
           });
+          console.log(user);
           return done(null, user);
         } else {
           const newUser = await prisma.user.create({

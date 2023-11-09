@@ -23,7 +23,7 @@ export const spotifyRouter = express.Router();
 
 spotifyRouter.get("/top", async (req, res) => {
   const accessToken =
-    "AQA-G788WVQDJTBVmn6HUAI3xWs7yEib_3vSUT7PE9N7RSwGO-ziIVyG4hA5nZ0KKQ0FhgxlSCqVwmIkxifU40ocv5gJUKnxqlcdOYO1A3Rxq7rn1lvhYlemPMhOTFul5tc ";
+    "BQB89tMZW2vNqDAuqkE06aSn7lMTcmqG1kX1XDgXGwJF7IPTGfY537pI0vRMNE0xmtJMayJFFoMLm4kedlSbbJSPmY0F7nRoI6EArC7cqCnmMUkW0NVcf_YRQg61JcQGdZLCrqw6VUmweKfTuzN9lMoMr_sbZTdrSpcF19qpJyNMHbu3oDrduYMwZfKeKAiVjSxq";
 
   const url = "https://api.spotify.com/v1/me/top/artists";
 
