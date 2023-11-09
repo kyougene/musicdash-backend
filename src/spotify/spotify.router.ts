@@ -21,7 +21,7 @@ spotifyRouter.get("/top", async (req: UserInfo, res) => {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
-    withCredentials: false,
+    withCredentials: true,
     params: {
       time_range: "short_term",
       limit: 10,
