@@ -5,7 +5,7 @@ import axios from "axios";
 export const spotifyRouter = express.Router();
 
 spotifyRouter.get("/top", async (req: UserInfo, res) => {
-  console.log(req.user.spotifyId);
+  console.log(req.user.accessToken);
   const id = req.user.spotifyId;
   const user = await prisma.user.findFirst({
     where: {
