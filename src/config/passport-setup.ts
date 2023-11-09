@@ -31,11 +31,18 @@ passport.use(
     },
     async (accessToken, refreshToken, expires_in, profile, done) => {
       try {
-        const user = await prisma.user.findFirst({
+        let user = await prisma.user.findFirst({
           where: { spotifyId: profile.id },
         });
         if (user) {
-          done(null, user);
+          user = await prisma.user.update({
+            where: { id: user.id },
+            data: {
+              accessToken,
+              refreshToken,
+            },
+          });
+          return done(null, user);
         } else {
           const newUser = await prisma.user.create({
             data: {
