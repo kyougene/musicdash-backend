@@ -15,11 +15,13 @@ passport.serializeUser((user: User, done) => {
 });
 
 passport.deserializeUser(async (id, done) => {
+  console.log(id);
   const user = await prisma.user.findFirst({
     where: {
       spotifyId: id,
     },
   });
+  console.log(user);
   done(null, user);
 });
 
