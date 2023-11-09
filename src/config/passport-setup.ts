@@ -14,7 +14,7 @@ passport.serializeUser((user: User, done) => {
 });
 
 passport.deserializeUser(async (id, done) => {
-  const user = await prisma.spotifyProfile.findFirst({
+  const user = await prisma.user.findFirst({
     where: {
       spotifyId: id,
     },
@@ -31,20 +31,19 @@ passport.use(
     },
     async (accessToken, refreshToken, expires_in, profile, done) => {
       try {
-        const user = await prisma.spotifyProfile.findFirst({
+        const user = await prisma.user.findFirst({
           where: { spotifyId: profile.id },
         });
         if (user) {
           done(null, user);
         } else {
-          const newUser = await prisma.spotifyProfile.create({
+          const newUser = await prisma.user.create({
             data: {
               spotifyId: profile.id,
               accessToken,
               refreshToken,
             },
           });
-          console.log(newUser);
           return done(null, newUser);
         }
       } catch (error) {
