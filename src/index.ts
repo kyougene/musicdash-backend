@@ -13,13 +13,14 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 
 app.use(express.json());
-app.use(
-  cors({
-    origin: "https://solo-project-six.vercel.app",
-    methods: "GET, HEAD, PUT, PATCH, POST, DELETE, OPTIONS",
-    credentials: true,
-  })
-);
+app.all("*", function (req, res) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Content-Type,Content-Length, Authorization, Accept,X-Requested-With"
+  );
+  res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
+});
 app.use(
   session({
     store: new PrismaSessionStore(prisma, {
