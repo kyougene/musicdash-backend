@@ -10,7 +10,6 @@ type User = {
 };
 
 passport.serializeUser((user: User, done) => {
-  console.log(user.spotifyId);
   done(null, user.spotifyId);
 });
 
@@ -45,7 +44,6 @@ passport.use(
               refreshToken,
             },
           });
-          console.log(user);
           return done(null, user);
         } else {
           const newUser = await prisma.user.create({
@@ -55,7 +53,6 @@ passport.use(
               refreshToken,
             },
           });
-          console.log(newUser);
           return done(null, newUser);
         }
       } catch (error) {
