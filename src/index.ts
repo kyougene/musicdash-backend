@@ -22,7 +22,7 @@ app.use(
       dbRecordIdFunction: undefined,
     }),
     secret: process.env.SECRET,
-    resave: false,
+    resave: true,
     saveUninitialized: true,
   })
 );
