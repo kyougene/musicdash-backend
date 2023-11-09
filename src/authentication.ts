@@ -31,7 +31,7 @@ export const isAuthenticated = (
   res: Response,
   next: NextFunction
 ) => {
-  if (req.session && req.session.authorized) {
+  if (req.user) {
     next();
   } else {
     res.status(401).send("Unauthorized");
