@@ -36,7 +36,7 @@ app.get("/", (req: Request, res: Response) => {
 
 app.use("/auth", authRouter);
 
-// app.use("/spotify", spotifyRouter);
+app.use("/spotify", spotifyRouter);
 
 app.listen(PORT, () => {
   console.log(`now listening on ${PORT}`);
