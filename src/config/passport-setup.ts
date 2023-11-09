@@ -10,6 +10,7 @@ type User = {
 };
 
 passport.serializeUser((user: User, done) => {
+  console.log(user.spotifyId);
   done(null, user.spotifyId);
 });
 

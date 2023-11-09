@@ -3,8 +3,8 @@ import express from "express";
 export const spotifyRouter = express.Router();
 
 spotifyRouter.get("/top", (req, res) => {
-  if (req.user) {
-    console.log(req.user);
+  if (req.session) {
+    console.log(req.session);
   }
-  res.send(req.user);
+  res.send(req.session);
 });
