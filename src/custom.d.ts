@@ -1,8 +1,15 @@
 import { SessionData } from "express-session";
 import { Request } from "express";
 
+type User = {
+  id: number;
+  spotifyId: string;
+  accessToken: string;
+  refreshToken: string;
+};
+
 export interface UserAuthInfoRequest extends Request {
-  user: string;
+  user: User;
 }
 
 declare module "express-session" {
