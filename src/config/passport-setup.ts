@@ -44,6 +44,7 @@ passport.use(
               refreshToken,
             },
           });
+          console.log(newUser);
           return done(null, newUser);
         }
       } catch (error) {

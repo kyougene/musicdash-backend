@@ -14,6 +14,6 @@ authRouter.get(
   "/spotify/redirect",
   passport.authenticate("spotify"),
   (req, res) => {
-    res.status(200).redirect(`${process.env.URL}dashboard`);
+    res.redirect(`${process.env.URL}dashboard`);
   }
 );

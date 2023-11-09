@@ -39,6 +39,8 @@ app.get("/", (req: Request, res: Response) => {
 
 app.use("/auth", authRouter);
 
+app.get("/dashboard");
+
 app.listen(PORT, () => {
   console.log(`now listening on ${PORT}`);
 });
