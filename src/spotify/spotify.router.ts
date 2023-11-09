@@ -4,7 +4,7 @@ import prisma from "../db.js";
 import axios from "axios";
 export const spotifyRouter = express.Router();
 
-spotifyRouter.get("/top", async (req: UserInfo, res) => {
+spotifyRouter.get("/top/songs", async (req: UserInfo, res) => {
   const id = req.user.spotifyId;
   const user = await prisma.user.findFirst({
     where: {
@@ -38,33 +38,6 @@ spotifyRouter.get("/top", async (req: UserInfo, res) => {
   }
 });
 
-spotifyRouter.get("/profile", async (req: UserInfo, res) => {
-  const id = req.user.spotifyId;
-  const user = await prisma.user.findFirst({
-    where: {
-      spotifyId: id,
-    },
-  });
-  const accessToken = user.accessToken;
-  const url = `https://api.spotify.com/v1/users/${user.spotifyId}`;
-  const options = {
-    method: "GET",
-    url,
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  };
-
-  try {
-    const profile = await axios(options);
-
-    res.json(profile);
-  } catch (error) {
-    console.error("Error fetching profile:", error);
-    res.status(500).json({ error: "Failed to fetch profile" });
-  }
-});
-
 spotifyRouter.get("/top/artists", async (req: UserInfo, res) => {
   const id = req.user.spotifyId;
   const user = await prisma.user.findFirst({
@@ -95,5 +68,32 @@ spotifyRouter.get("/top/artists", async (req: UserInfo, res) => {
   } catch (error) {
     console.error("Error fetching top artists:", error);
     res.status(500).json({ error: "Failed to fetch top artists" });
+  }
+});
+
+spotifyRouter.get("/profile", async (req: UserInfo, res) => {
+  const id = req.user.spotifyId;
+  const user = await prisma.user.findFirst({
+    where: {
+      spotifyId: id,
+    },
+  });
+  const accessToken = user.accessToken;
+  const url = `https://api.spotify.com/v1/users/${user.spotifyId}`;
+  const options = {
+    method: "GET",
+    url,
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  };
+
+  try {
+    const profile = await axios(options);
+
+    res.json(profile);
+  } catch (error) {
+    console.error("Error fetching profile:", error);
+    res.status(500).json({ error: "Failed to fetch profile" });
   }
 });
