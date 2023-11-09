@@ -23,7 +23,7 @@ spotifyRouter.get("/top", async (req, res) => {
   };
   try {
     const result = await axios(payload);
-    res.send(result);
+    console.log(result);
   } catch (err) {
     console.error(err);
   }
