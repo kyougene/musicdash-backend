@@ -26,14 +26,14 @@ export const checkPassword = async (
   return result;
 };
 
-export const isAuthenticated = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  if (req.user) {
-    next();
-  } else {
-    res.status(401).send("Unauthorized");
-  }
-};
+// export const isAuthenticated = (
+//   req: Request,
+//   res: Response,
+//   next: NextFunction
+// ) => {
+//   if (req.user) {
+//     next();
+//   } else {
+//     res.status(401).send("Unauthorized");
+//   }
+// };
