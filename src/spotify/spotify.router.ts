@@ -21,6 +21,7 @@ spotifyRouter.get("/top", async (req: UserInfo, res) => {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
+    withCredentials: false,
     params: {
       time_range: "short_term",
       limit: 10,
@@ -30,6 +31,7 @@ spotifyRouter.get("/top", async (req: UserInfo, res) => {
   try {
     const response = await axios(options);
     const topTracks = response.data.items.name;
+    console.log(topTracks);
     res.json(topTracks);
   } catch (error) {
     console.error("Error fetching top tracks:", error);
