@@ -8,7 +8,7 @@ type User = {
   refreshToken: string;
 };
 
-export interface UserAuthInfoRequest extends Request {
+export interface UserInfo extends Request {
   user: User;
 }
 

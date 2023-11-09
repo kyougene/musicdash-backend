@@ -1,10 +1,11 @@
 import express from "express";
-import { UserAuthInfoRequest } from "../custom.js";
+import { UserInfo } from "../custom.js";
 import prisma from "../db.js";
 import axios from "axios";
 export const spotifyRouter = express.Router();
 
-spotifyRouter.get("/top", async (req: UserAuthInfoRequest, res) => {
+spotifyRouter.get("/top", async (req: UserInfo, res) => {
+  console.log(req.user.spotifyId);
   const id = req.user.spotifyId;
   const user = await prisma.user.findFirst({
     where: {
