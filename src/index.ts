@@ -13,7 +13,8 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 
 app.use(express.json());
-app.options("*", cors());
+app.use(cors());
+app.options("/spotify/top", cors());
 app.use(
   session({
     store: new PrismaSessionStore(prisma, {
