@@ -14,7 +14,13 @@ const PORT = process.env.PORT || 8080;
 
 app.use(express.json());
 app.use(cors());
-app.options("/spotify/top", cors());
+app.use(
+  cors({
+    origin: ["https://solo-project-six.vercel.app"],
+    methods: "GET, HEAD, PUT, PATCH, POST, DELETE, OPTIONS",
+    credentials: true,
+  })
+);
 app.use(
   session({
     store: new PrismaSessionStore(prisma, {

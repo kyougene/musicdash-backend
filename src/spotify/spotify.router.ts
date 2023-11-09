@@ -16,7 +16,7 @@ spotifyRouter.get("/top", async (req: UserInfo, res) => {
   const accessToken = user.accessToken;
   const url = "https://api.spotify.com/v1/me/top/tracks";
   const options = {
-    method: "get",
+    method: "GET",
     url,
     headers: {
       Authorization: `Bearer ${accessToken}`,
