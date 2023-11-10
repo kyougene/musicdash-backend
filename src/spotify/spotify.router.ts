@@ -19,7 +19,6 @@ spotifyRouter.get("/top/songs", async (req: UserInfo, res) => {
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
-    withCredentials: true,
     params: {
       time_range: "short_term",
       limit: 10,
