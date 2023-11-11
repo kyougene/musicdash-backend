@@ -7,7 +7,7 @@ export const spotifyRouter = express.Router();
 
 spotifyRouter.use(cors());
 
-spotifyRouter.get("/top/songs", async (req: UserInfo, res) => {
+spotifyRouter.get("/top/songs/", async (req: UserInfo, res) => {
   if (req.user.spotifyId) {
     const id = req.user.spotifyId;
     const user = await prisma.user.findFirst({
@@ -44,7 +44,7 @@ spotifyRouter.get("/top/songs", async (req: UserInfo, res) => {
   }
 });
 
-spotifyRouter.get("/top/artists", async (req: UserInfo, res) => {
+spotifyRouter.get("/top/artists/", async (req: UserInfo, res) => {
   const id = req.user.spotifyId;
   const user = await prisma.user.findFirst({
     where: {
@@ -77,7 +77,7 @@ spotifyRouter.get("/top/artists", async (req: UserInfo, res) => {
   }
 });
 
-spotifyRouter.get("/profile", async (req: UserInfo, res) => {
+spotifyRouter.get("/profile/", async (req: UserInfo, res) => {
   const id = req.user.spotifyId;
   const user = await prisma.user.findFirst({
     where: {
