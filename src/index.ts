@@ -21,6 +21,8 @@ app.use(
   })
 );
 
+app.options("*", cors());
+
 app.use(
   session({
     store: new PrismaSessionStore(prisma, {
@@ -42,8 +44,6 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.use("/auth", authRouter);
-
-app.options("/spotify/top", cors());
 
 app.use("/spotify", spotifyRouter);
 
