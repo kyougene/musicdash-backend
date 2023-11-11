@@ -15,7 +15,7 @@ const PORT = process.env.PORT || 8080;
 app.use(express.json());
 app.use(
   cors({
-    origin: "https://solo-project-six.vercel.app/",
+    origin: ["https://solo-project-six.vercel.app", "http://localhost:3000"],
     methods: "GET, HEAD, PUT, PATCH, POST, DELETE, OPTIONS",
     credentials: true,
   })
