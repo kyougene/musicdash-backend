@@ -2,7 +2,10 @@ import express from "express";
 import { UserInfo } from "../custom.js";
 import prisma from "../db.js";
 import axios from "axios";
+import cors from "cors";
 export const spotifyRouter = express.Router();
+
+spotifyRouter.use(cors());
 
 spotifyRouter.get("/top/songs", async (req: UserInfo, res) => {
   if (req.user.spotifyId) {
