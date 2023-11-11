@@ -7,6 +7,7 @@ type User = {
   spotifyId: string;
   accessToken: string;
   refreshToken: string;
+  expires_in: number;
 };
 
 passport.serializeUser((user: User, done) => {
@@ -40,6 +41,7 @@ passport.use(
             data: {
               accessToken,
               refreshToken,
+              expires_in,
             },
           });
           return done(null, user);
@@ -49,6 +51,7 @@ passport.use(
               spotifyId: profile.id,
               accessToken,
               refreshToken,
+              expires_in,
             },
           });
           console.log(newUser);
