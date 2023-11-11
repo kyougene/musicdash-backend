@@ -3,7 +3,7 @@ import { Request } from "express";
 
 type User = {
   id: number;
-  spotifyId: string;
+  spotifyId: string | undefined;
   accessToken: string;
   refreshToken: string;
 };
