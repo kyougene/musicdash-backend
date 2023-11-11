@@ -21,7 +21,7 @@ app.use(
   })
 );
 
-app.options("*", cors());
+// app.options("/spotify/top/songs/", cors());
 
 app.use(
   session({
