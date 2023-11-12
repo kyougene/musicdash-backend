@@ -39,7 +39,7 @@ spotifyRouter.get("/top/songs/", async (req: UserInfo, res) => {
     try {
       const response = await axios(options);
       const topTracks = response.data.items.map((data) => {
-        return data.name;
+        return { name: data.name, artist: data.artists[0].name };
       });
       res.json(topTracks);
     } catch (error) {
@@ -148,6 +148,82 @@ spotifyRouter.get("/top/songs/", async (req: UserInfo, res) => {
     }
   } else {
     res.status(500).json({ error: "No user found" });
+  }
+});
+
+spotifyRouter.get("/recommendations/", async (req: UserInfo, res) => {
+  refreshAccessToken(req.user.spotifyId);
+  if (req.user.spotifyId) {
+    const id = req.user.spotifyId;
+    const user = await prisma.user.findFirst({
+      where: {
+        spotifyId: id,
+      },
+    });
+    const accessToken = user.accessToken;
+
+    try {
+      const trackResponse = await axios.get(
+        "https://api.spotify.com/v1/me/top/tracks",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+          params: {
+            time_range: "short_term",
+            limit: 5,
+          },
+        }
+      );
+      const topTracks = trackResponse.data.items.map((data) => {
+        return data.id;
+      });
+      const artistResponse = await axios.get(
+        "https://api.spotify.com/v1/me/top/artists",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+          params: {
+            time_range: "short_term",
+            limit: 5,
+          },
+        }
+      );
+      const topArtists = artistResponse.data.items.map((data) => {
+        return data.id;
+      });
+
+      const recommendationsResponse = await axios.get(
+        "https://api.spotify.com/v1/recommendations/",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+          params: {
+            limit: 10,
+            seed_artists: topArtists.join(","),
+          },
+        }
+      );
+      const recommendations = recommendationsResponse.data.tracks.map(
+        (data) => {
+          return {
+            name: data.name,
+            artist: data.artists.map((artist) => {
+              return artist.name;
+            }),
+          };
+        }
+      );
+      res.status(200).send(recommendations);
+    } catch (error) {
+      console.error("Error fetching recommendations:", error);
+      res.status(500).json({ error: "Failed to fetch top recommendations" });
+    }
   }
 });
 
