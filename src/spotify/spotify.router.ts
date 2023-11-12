@@ -163,22 +163,6 @@ spotifyRouter.get("/recommendations/", async (req: UserInfo, res) => {
     const accessToken = user.accessToken;
 
     try {
-      const trackResponse = await axios.get(
-        "https://api.spotify.com/v1/me/top/tracks",
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-          params: {
-            time_range: "short_term",
-            limit: 5,
-          },
-        }
-      );
-      const topTracks = trackResponse.data.items.map((data) => {
-        return data.id;
-      });
       const artistResponse = await axios.get(
         "https://api.spotify.com/v1/me/top/artists",
         {
