@@ -14,6 +14,6 @@ authRouter.get(
   "/spotify/redirect",
   passport.authenticate("spotify", { failureRedirect: "/" }),
   (req, res) => {
-    res.status(200).redirect(`${process.env.URL}dashboard`);
+    res.status(200).redirect(`https://solo-project-six.vercel.app/dashboard`);
   }
 );
