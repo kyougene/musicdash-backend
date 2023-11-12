@@ -1,14 +1,7 @@
 import passport from "passport";
 import { Strategy } from "passport-spotify";
 import prisma from "../db.js";
-
-type User = {
-  id: number;
-  spotifyId: string;
-  accessToken: string;
-  refreshToken: string;
-  expires_in: number;
-};
+import { User } from "../custom.js";
 
 passport.serializeUser((user: User, done) => {
   done(null, user.spotifyId);
@@ -41,7 +34,7 @@ passport.use(
             data: {
               accessToken,
               refreshToken,
-              expires_in,
+              expires_at: Date.now() + expires_in * 1000,
             },
           });
           return done(null, user);
@@ -51,7 +44,7 @@ passport.use(
               spotifyId: profile.id,
               accessToken,
               refreshToken,
-              expires_in,
+              expires_at: Date.now() + expires_in * 1000,
             },
           });
           console.log(newUser);

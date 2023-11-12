@@ -8,6 +8,8 @@ import cors from "cors";
 import "./config/passport-setup.js";
 import passport from "passport";
 import { spotifyRouter } from "./spotify/spotify.router.js";
+import { UserInfo } from "./custom.js";
+import axios from "axios";
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -20,8 +22,6 @@ app.use(
     credentials: true,
   })
 );
-
-// app.options("/spotify/top/songs/", cors());
 
 app.use(
   session({

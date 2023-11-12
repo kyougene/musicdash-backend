@@ -6,6 +6,7 @@ type User = {
   spotifyId: string | undefined;
   accessToken: string;
   refreshToken: string;
+  expires_at: number;
 };
 
 export interface UserInfo extends Request {

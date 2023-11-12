@@ -12,7 +12,7 @@ model User {
   spotifyId    String @unique
   accessToken  String
   refreshToken String
-  expires_in   Int
+  expires_at   BigInt
 }
 
 model Session {

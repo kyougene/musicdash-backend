@@ -3,9 +3,18 @@ import { UserInfo } from "../custom.js";
 import prisma from "../db.js";
 import axios from "axios";
 
+type ResponseData = {
+  refresh_token: string;
+  access_token: string;
+  expires_at: number;
+  token_type: string;
+  bearer: string;
+};
+
 export const spotifyRouter = express.Router();
 
 spotifyRouter.get("/top/songs/", async (req: UserInfo, res) => {
+  refreshAccessToken(req.user.spotifyId);
   if (req.user.spotifyId) {
     const id = req.user.spotifyId;
     const user = await prisma.user.findFirst({
@@ -43,7 +52,7 @@ spotifyRouter.get("/top/songs/", async (req: UserInfo, res) => {
 });
 
 spotifyRouter.get("/top/artists/", async (req: UserInfo, res) => {
-  console.log(req.user);
+  refreshAccessToken(req.user.spotifyId);
   const id = req.user.spotifyId;
   const user = await prisma.user.findFirst({
     where: {
@@ -77,6 +86,7 @@ spotifyRouter.get("/top/artists/", async (req: UserInfo, res) => {
 });
 
 spotifyRouter.get("/profile/", async (req: UserInfo, res) => {
+  refreshAccessToken(req.user.spotifyId);
   const id = req.user.spotifyId;
   const user = await prisma.user.findFirst({
     where: {
@@ -104,6 +114,7 @@ spotifyRouter.get("/profile/", async (req: UserInfo, res) => {
 });
 
 spotifyRouter.get("/top/songs/", async (req: UserInfo, res) => {
+  refreshAccessToken(req.user.spotifyId);
   if (req.user.spotifyId) {
     const id = req.user.spotifyId;
     const user = await prisma.user.findFirst({
@@ -139,3 +150,44 @@ spotifyRouter.get("/top/songs/", async (req: UserInfo, res) => {
     res.status(500).json({ error: "No user found" });
   }
 });
+
+const refreshAccessToken = async (id: string) => {
+  const user = await prisma.user.findFirst({
+    where: {
+      spotifyId: id,
+    },
+  });
+
+  const refreshToken = user.refreshToken;
+
+  if (Date.now() > user.expires_at) {
+    try {
+      const refreshResponse: ResponseData = await axios.post(
+        "https://accounts.spotify.com/api/token",
+        `grant_type=refresh_token&refresh_token=${refreshToken}`,
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            Authorization: `Basic ${Buffer.from(
+              `${process.env.CLIENT_ID}:${process.env.CLIENT_SECRET}`
+            ).toString("base64")}`,
+          },
+        }
+      );
+
+      prisma.user.update({
+        where: {
+          spotifyId: user.spotifyId,
+        },
+        data: {
+          accessToken: refreshResponse.access_token,
+          refreshToken: refreshResponse.refresh_token,
+          expires_at: Date.now() + refreshResponse.expires_at * 1000,
+        },
+      });
+    } catch (error) {
+      console.error("Error refreshing token:", error.message);
+      return;
+    }
+  }
+};
