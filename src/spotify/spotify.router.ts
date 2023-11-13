@@ -94,19 +94,17 @@ spotifyRouter.get("/profile/", async (req: UserInfo, res) => {
     },
   });
   const accessToken = user.accessToken;
-  const url = `https://api.spotify.com/v1/users/${user.spotifyId}`;
-  const options = {
-    method: "GET",
-    url,
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  };
-
   try {
-    const profile = await axios(options);
-
-    res.json(profile);
+    const profileResponse: any = await fetch("https://api.spotify.com/v1/me", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }).then((res) => res.json());
+    res.send({
+      name: profileResponse.display_name,
+      avatar: profileResponse.images[0].url,
+    });
   } catch (error) {
     console.error("Error fetching profile:", error);
     res.status(500).json({ error: "Failed to fetch profile" });
