@@ -64,4 +64,3 @@ Follow these steps to get the Music Dashboard backend up and running locally
 
 ## ISSUES AND NOTES
 * Directly accessing the backend endpoints successfully retrieves data from spotify's API
-* Currently there are placeholders values being used in the frontend to display data instead of data retrieved from api requests to these endpoints, this is due to CORS issues blocking these requests 
