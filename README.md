@@ -2,9 +2,6 @@
 # Music Dashboard Backend
 ...
 
-## Deployment URL: https://solo-backend-b6ea6f5e7f39.herokuapp.com/
-* The deployment is slightly more functional than the local version 
-
 ## Features
 
 - View detailed insights into your Spotify listening history. (WIP)
